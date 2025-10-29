@@ -33,6 +33,10 @@
   - [Vercel Blob](https://vercel.com/storage/blob) for efficient file storage
 - [Auth.js](https://authjs.dev)
   - Simple and secure authentication
+- Internationalization (i18n)
+  - Multi-language support (English, Russian)
+  - Lightweight implementation without external dependencies
+  - See [docs/i18n.md](docs/i18n.md) for details
 
 ## Model Providers
 
