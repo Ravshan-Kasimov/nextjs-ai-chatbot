@@ -30,12 +30,15 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "./ui/alert-dialog";
+import { useI18n } from "@/lib/i18n";
+import { LanguageSwitcher } from "./language-switcher";
 
 export function AppSidebar({ user }: { user: User | undefined }) {
   const router = useRouter();
   const { setOpenMobile } = useSidebar();
   const { mutate } = useSWRConfig();
   const [showDeleteAllDialog, setShowDeleteAllDialog] = useState(false);
+  const { t } = useI18n();
 
   const handleDeleteAll = () => {
     const deletePromise = fetch("/api/history", {
@@ -43,14 +46,14 @@ export function AppSidebar({ user }: { user: User | undefined }) {
     });
 
     toast.promise(deletePromise, {
-      loading: "Deleting all chats...",
+      loading: t.deletingAllChats,
       success: () => {
         mutate(unstable_serialize(getChatHistoryPaginationKey));
         router.push("/");
         setShowDeleteAllDialog(false);
-        return "All chats deleted successfully";
+        return t.allChatsDeletedSuccess;
       },
-      error: "Failed to delete all chats",
+      error: t.allChatsDeleteFailed,
     });
   };
 
@@ -68,10 +71,11 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                 }}
               >
                 <span className="cursor-pointer rounded-md px-2 font-semibold text-lg hover:bg-muted">
-                  Chatbot
+                  {t.chatbot}
                 </span>
               </Link>
               <div className="flex flex-row gap-1">
+                <LanguageSwitcher />
                 {user && (
                   <Tooltip>
                     <TooltipTrigger asChild>
@@ -85,7 +89,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent align="end" className="hidden md:block">
-                      Delete All Chats
+                      {t.deleteAllChats}
                     </TooltipContent>
                   </Tooltip>
                 )}
@@ -105,7 +109,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent align="end" className="hidden md:block">
-                    New Chat
+                    {t.newChat}
                   </TooltipContent>
                 </Tooltip>
               </div>
@@ -121,16 +125,15 @@ export function AppSidebar({ user }: { user: User | undefined }) {
       <AlertDialog onOpenChange={setShowDeleteAllDialog} open={showDeleteAllDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete all chats?</AlertDialogTitle>
+            <AlertDialogTitle>{t.deleteAllTitle}</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete all your
-              chats and remove them from our servers.
+              {t.deleteAllDescription}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t.cancel}</AlertDialogCancel>
             <AlertDialogAction onClick={handleDeleteAll}>
-              Delete All
+              {t.deleteAll}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

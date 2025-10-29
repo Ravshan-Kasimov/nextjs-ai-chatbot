@@ -1,3 +1,5 @@
+"use client";
+
 import type { ComponentProps } from "react";
 
 import { type SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
@@ -9,11 +11,13 @@ import {
 import { cn } from "@/lib/utils";
 import { SidebarLeftIcon } from "./icons";
 import { Button } from "./ui/button";
+import { useI18n } from "@/lib/i18n";
 
 export function SidebarToggle({
   className,
 }: ComponentProps<typeof SidebarTrigger>) {
   const { toggleSidebar } = useSidebar();
+  const { t } = useI18n();
 
   return (
     <Tooltip>
@@ -28,7 +32,7 @@ export function SidebarToggle({
         </Button>
       </TooltipTrigger>
       <TooltipContent align="start" className="hidden md:block">
-        Toggle Sidebar
+        {t.toggleSidebar}
       </TooltipContent>
     </Tooltip>
   );
