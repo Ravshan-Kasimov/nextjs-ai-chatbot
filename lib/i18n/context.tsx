@@ -24,9 +24,9 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("locale");
-      return (saved as Locale) || "en";
+      return (saved as Locale) || "ru";
     }
-    return "en";
+    return "ru";
   });
 
   const setLocale = (newLocale: Locale) => {
