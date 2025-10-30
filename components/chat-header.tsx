@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { PlusIcon, VercelIcon } from "./icons";
 import { useSidebar } from "./ui/sidebar";
 import { VisibilitySelector, type VisibilityType } from "./visibility-selector";
+import { useI18n } from "@/lib/i18n";
 
 function PureChatHeader({
   chatId,
@@ -21,6 +22,7 @@ function PureChatHeader({
 }) {
   const router = useRouter();
   const { open } = useSidebar();
+  const { t } = useI18n();
 
   const { width: windowWidth } = useWindowSize();
 
@@ -38,7 +40,7 @@ function PureChatHeader({
           variant="outline"
         >
           <PlusIcon />
-          <span className="md:sr-only">New Chat</span>
+          <span className="md:sr-only">{t.newChat}</span>
         </Button>
       )}
 
@@ -60,7 +62,7 @@ function PureChatHeader({
           target="_noblank"
         >
           <VercelIcon size={16} />
-          Deploy with Vercel
+          {t.deployWithVercel}
         </Link>
       </Button>
     </header>
